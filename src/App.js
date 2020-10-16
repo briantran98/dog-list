@@ -1,12 +1,23 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux'
+
+import { fetchDogs } from './features/dog/dogSlice'
 import './App.css';
 
 function App() {
+  const dispatch = useDispatch()
+  const dogStatus = useSelector(state => state.dogs.status)
+
+
+  useEffect(() => {
+    if (dogStatus === 'idle') {
+      dispatch(fetchDogs())
+    }
+  },[dogStatus, dispatch])
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
