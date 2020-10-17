@@ -1,51 +1,53 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Table.css'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { fetchDogs } from '../features/dog/dogSlice'
+import { fetchDogs, dogReorder } from '../features/dog/dogSlice'
 
 export const Table = ( {tableNumber} ) => {
-    const dispatch = useDispatch()
+    const [draggedIndex, setDraggedIndex] = useState('')
+    const [droppedIndex, setDroppedIndex] = useState('')
 
+    const dispatch = useDispatch()
     const dogStatus = useSelector(state => state.dogs.status)
+    const breeds = useSelector(state => state.dogs.breeds)
+    // const breeds = useSelector(state => state.dogs.breeds).slice(0,10)
+
+// 
+    const allowDrop = e => {
+        e.preventDefault();
+    }
+
+    const dragStart = e => {
+        setDraggedIndex(breeds.findIndex(breed => breed === e.target.innerHTML))
+    }
 
     const drop = e => {
         e.preventDefault()
-        const data = e.dataTransfer.getData("Text")
-        console.log(e.target.innerText)
+        setDroppedIndex(breeds.findIndex(breed => breed === e.target.innerHTML))
     }
   
-    const allowDrop = e => {
-        e.preventDefault();
+    const dragEnd = () => {
+        dispatch(dogReorder({draggedIndex, droppedIndex, length: breeds.length}))
+        setDraggedIndex('')
+        setDroppedIndex('')
     }
 
     useEffect(() => {
       if (dogStatus === 'idle') {
         dispatch(fetchDogs())
       }
-
-    //   function array_move(arr, old_index, new_index) {
-    //     if (new_index >= arr.length) {
-    //         let k = new_index - arr.length + 1;
-    //         while (k--) {
-    //             arr.push(undefined);
-    //         }
-    //     }
-    //     arr.splice(new_index, 0, arr.splice(old_index, 1)[0]);
-    //     return arr; // for testing
-    // };
-
     },[dogStatus, dispatch])
   
     let i = 1;
-    const breeds = useSelector(state => state.dogs.breeds).slice(0,10)
+    
     const renderedTable = breeds.map((breed) => (
         <tr key={breed} onDrop={e=>drop(e)} onDragOver={e=>allowDrop(e)}>
             <td>
                 {i++}
             </td>
-            <td draggable='true'>
-                <span >{breed}</span>
+            <td draggable='true' onDragStart={e=>dragStart(e)} onDragEnd={e=>dragEnd(e)}>
+                {breed}
             </td>
         </tr>
     ))

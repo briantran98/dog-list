@@ -16,10 +16,11 @@ const dogsSlice = createSlice({
     name:'dogs',
     initialState,
     reducers: {
-        dogAdded: {
-            reducer(state, action) {
-                state.breeds.push(action.payload)
-            }
+        dogReorder(state, action) {
+            const { draggedIndex, droppedIndex } = action.payload
+            const temp = state.breeds[droppedIndex]
+            state.breeds[droppedIndex] = state.breeds[draggedIndex]
+            state.breeds[draggedIndex] = temp
         }
     },
     extraReducers: {
@@ -28,7 +29,13 @@ const dogsSlice = createSlice({
         },
         [fetchDogs.fulfilled]: (state, action) => {
             state.status = 'completed'
-            state.breeds = state.breeds.concat(action.payload)
+            for(let j = action.payload.length - 1; j >= 0; j--) {
+                let swapIndex = Math.floor(Math.random() * j)
+                let temp = action.payload[swapIndex]
+                action.payload[swapIndex] = action.payload[j]
+                action.payload[j] = temp
+            }
+            state.breeds = action.payload.slice(0,20)
         },
         [fetchDogs.rejected]: (state, action) => {
             state.status = 'failed'
@@ -37,6 +44,6 @@ const dogsSlice = createSlice({
     }
 })
 
-export const { dogAdded } = dogsSlice.actions
+export const { dogReorder } = dogsSlice.actions
 
 export default dogsSlice.reducer
