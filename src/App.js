@@ -1,35 +1,14 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux'
-
-import { fetchDogs } from './features/dog/dogSlice'
+import React from 'react';
+import { Table } from './components/Table'
 import './App.css';
 
 function App() {
-  const dispatch = useDispatch()
-  const dogStatus = useSelector(state => state.dogs.status)
-
-
-  useEffect(() => {
-    if (dogStatus === 'idle') {
-      dispatch(fetchDogs())
-    }
-  },[dogStatus, dispatch])
 
   return (
     <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Table tableNumber="1"/>
+      <Table tableNumber="2"/>
+      {/* <div className="droppable" onDragOver={(e)=>this.onDragOver(e)} ></div> */}
     </div>
   );
 }

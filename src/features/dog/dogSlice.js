@@ -2,7 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 const initialState = {
-    dogs: [],
+    breeds: [],
     status: 'idle',
     error: null
 }
@@ -18,7 +18,7 @@ const dogsSlice = createSlice({
     reducers: {
         dogAdded: {
             reducer(state, action) {
-                state.dogs.push(action.payload)
+                state.breeds.push(action.payload)
             }
         }
     },
@@ -28,7 +28,7 @@ const dogsSlice = createSlice({
         },
         [fetchDogs.fulfilled]: (state, action) => {
             state.status = 'completed'
-            state.dogs = state.dogs.concat(action.payload)
+            state.breeds = state.breeds.concat(action.payload)
         },
         [fetchDogs.rejected]: (state, action) => {
             state.status = 'failed'
