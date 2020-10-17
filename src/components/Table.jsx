@@ -9,17 +9,16 @@ export const Table = ( {tableNumber} ) => {
 
     const dogStatus = useSelector(state => state.dogs.status)
 
-    const dragStart = event => {
-        // event.dataTransfer.setData("Text", event.target.id)
-        console.log("Dragging")
+    const drop = e => {
+        e.preventDefault()
+        const data = e.dataTransfer.getData("Text")
+        console.log(e.target.innerText)
+    }
+  
+    const allowDrop = e => {
+        e.preventDefault();
     }
 
-    // const drop = e => {
-    //     e.preventDefault()
-    //     const data = e.dataTransfer.getData("Text")
-    //     e.target.appen
-    // }
-  
     useEffect(() => {
       if (dogStatus === 'idle') {
         dispatch(fetchDogs())
@@ -41,12 +40,12 @@ export const Table = ( {tableNumber} ) => {
     let i = 1;
     const breeds = useSelector(state => state.dogs.breeds).slice(0,10)
     const renderedTable = breeds.map((breed) => (
-        <tr key={breed}>
+        <tr key={breed} onDrop={e=>drop(e)} onDragOver={e=>allowDrop(e)}>
             <td>
                 {i++}
             </td>
-            <td draggable onDragStart={e=>dragStart(e)}>
-                {breed}
+            <td draggable='true'>
+                <span >{breed}</span>
             </td>
         </tr>
     ))
