@@ -5,14 +5,12 @@ import { useSelector, useDispatch } from 'react-redux'
 import { dogReorder } from '../features/dog/dogSlice'
 
 export const Table = ( {tableNumber} ) => {
-    const [draggedIndex, setDraggedIndex] = useState('')
-    const [droppedIndex, setDroppedIndex] = useState('')
+    const [draggedIndex, setDraggedIndex] = useState(null)
+    const [droppedIndex, setDroppedIndex] = useState(null)
 
     const dispatch = useDispatch()
     const breeds = useSelector(state => state.dogs[`breeds${tableNumber}`])
-    // const breeds = useSelector(state => state.dogs.breeds).slice(0,10)
 
-// 
     const allowDrop = e => {
         e.preventDefault();
     }
@@ -24,15 +22,15 @@ export const Table = ( {tableNumber} ) => {
     const drop = e => {
         e.preventDefault()
         setDroppedIndex(breeds.findIndex(breed => breed === e.target.innerHTML))
+        console.log( e.target.innerHTML)
     }
   
     const dragEnd = () => {
-        console.log(draggedIndex, droppedIndex)
-        if (draggedIndex >= 0  && droppedIndex >=0){
+        if (draggedIndex && droppedIndex){
             dispatch(dogReorder({draggedIndex, droppedIndex, tableNumber}))
         }
-        setDraggedIndex('')
-        setDroppedIndex('')
+        setDraggedIndex(null)
+        setDroppedIndex(null)
     }
   
     let i = 1;
