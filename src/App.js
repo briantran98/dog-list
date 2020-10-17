@@ -1,8 +1,19 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Table } from './components/Table'
+import { useSelector, useDispatch } from 'react-redux'
+import { fetchDogs } from './features/dog/dogSlice'
 import './App.css';
 
 function App() {
+
+  const dogStatus = useSelector(state => state.dogs.status)
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (dogStatus === 'idle') {
+      dispatch(fetchDogs())
+    }
+  },[dogStatus, dispatch])
 
   return (
     <div className="App">

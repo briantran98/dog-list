@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import './Table.css'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { fetchDogs, dogReorder } from '../features/dog/dogSlice'
+import { dogReorder } from '../features/dog/dogSlice'
 
 export const Table = ( {tableNumber} ) => {
     const [draggedIndex, setDraggedIndex] = useState('')
     const [droppedIndex, setDroppedIndex] = useState('')
 
     const dispatch = useDispatch()
-    const dogStatus = useSelector(state => state.dogs.status)
-    const breeds = useSelector(state => state.dogs.breeds)
+    const breeds = useSelector(state => state.dogs[`breeds${tableNumber}`])
     // const breeds = useSelector(state => state.dogs.breeds).slice(0,10)
 
 // 
@@ -28,18 +27,13 @@ export const Table = ( {tableNumber} ) => {
     }
   
     const dragEnd = () => {
-        if (draggedIndex && droppedIndex){
-            dispatch(dogReorder({draggedIndex, droppedIndex, length: breeds.length}))
+        console.log(draggedIndex, droppedIndex)
+        if (draggedIndex >= 0  && droppedIndex >=0){
+            dispatch(dogReorder({draggedIndex, droppedIndex, tableNumber}))
         }
         setDraggedIndex('')
         setDroppedIndex('')
     }
-
-    useEffect(() => {
-      if (dogStatus === 'idle') {
-        dispatch(fetchDogs())
-      }
-    },[dogStatus, dispatch])
   
     let i = 1;
     

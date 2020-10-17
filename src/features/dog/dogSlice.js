@@ -2,7 +2,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
 import axios from 'axios'
 
 const initialState = {
-    breeds: [],
+    breeds1: [],
+    breeds2: [],
     status: 'idle',
     error: null
 }
@@ -17,10 +18,10 @@ const dogsSlice = createSlice({
     initialState,
     reducers: {
         dogReorder(state, action) {
-            const { draggedIndex, droppedIndex } = action.payload
-            const temp = state.breeds[droppedIndex]
-            state.breeds[droppedIndex] = state.breeds[draggedIndex]
-            state.breeds[draggedIndex] = temp
+            const { draggedIndex, droppedIndex, tableNumber } = action.payload
+            const temp = state[`breeds${tableNumber}`][droppedIndex]
+            state[`breeds${tableNumber}`][droppedIndex] = state[`breeds${tableNumber}`][draggedIndex]
+            state[`breeds${tableNumber}`][draggedIndex] = temp
         }
     },
     extraReducers: {
@@ -35,7 +36,8 @@ const dogsSlice = createSlice({
                 action.payload[swapIndex] = action.payload[j]
                 action.payload[j] = temp
             }
-            state.breeds = action.payload.slice(0,20)
+            state.breeds1 = action.payload.slice(0,10)
+            state.breeds2 = action.payload.slice(11,21)
         },
         [fetchDogs.rejected]: (state, action) => {
             state.status = 'failed'
