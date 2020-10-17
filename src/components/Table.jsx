@@ -28,7 +28,9 @@ export const Table = ( {tableNumber} ) => {
     }
   
     const dragEnd = () => {
-        dispatch(dogReorder({draggedIndex, droppedIndex, length: breeds.length}))
+        if (draggedIndex && droppedIndex){
+            dispatch(dogReorder({draggedIndex, droppedIndex, length: breeds.length}))
+        }
         setDraggedIndex('')
         setDroppedIndex('')
     }
@@ -42,11 +44,11 @@ export const Table = ( {tableNumber} ) => {
     let i = 1;
     
     const renderedTable = breeds.map((breed) => (
-        <tr key={breed} onDrop={e=>drop(e)} onDragOver={e=>allowDrop(e)}>
+        <tr key={breed}>
             <td>
                 {i++}
             </td>
-            <td draggable='true' onDragStart={e=>dragStart(e)} onDragEnd={e=>dragEnd(e)}>
+            <td draggable='true' onDragStart={e=>dragStart(e)} onDragEnd={e=>dragEnd(e)} onDrop={e=>drop(e)} onDragOver={e=>allowDrop(e)}>
                 {breed}
             </td>
         </tr>
