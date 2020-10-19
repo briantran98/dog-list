@@ -1,7 +1,10 @@
 import React, { useEffect } from 'react';
-import { Table } from './components/Table'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchDogs } from './features/dog/dogSlice'
+
+import { Table } from './components/Table'
+import { Button } from './components/Button'
+
 import './App.css';
 
 function App() {
@@ -17,9 +20,11 @@ function App() {
 
   return (
     <div className="App">
-      <Table tableNumber="1"/>
-      <Table tableNumber="2"/>
-      {/* <div className="droppable" onDragOver={(e)=>this.onDragOver(e)} ></div> */}
+      <main className="TableContainer">
+        <Table tableNumber="1"/>
+        <Table tableNumber="2"/>
+        <Button />
+      </main>
     </div>
   );
 }
