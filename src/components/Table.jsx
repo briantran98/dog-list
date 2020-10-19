@@ -2,45 +2,46 @@ import React, { useState } from 'react';
 import './Table.css'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { dogReorder } from '../features/dog/dogSlice'
+import { 
+    setOriginIndex,
+    moveBetweenTable,
+    setOriginTable,
+    reorder } from '../features/dog/dogSlice'
 
-export const Table = ( {tableNumber} ) => {
-    const [draggedIndex, setDraggedIndex] = useState(null)
-    const [droppedIndex, setDroppedIndex] = useState(null)
+export const Table = ( {tableNumber: currentTable} ) => {
+    const [startingIndex, setStartingIndex] = useState(null)
 
     const dispatch = useDispatch()
-    const breeds = useSelector(state => state.dogs[`breeds${tableNumber}`])
+    const breeds = useSelector(state => state.dogs[`breeds${currentTable}`])
+    const originTable = useSelector(state => state.dogs.originTable)
 
     const allowDrop = e => {
         e.preventDefault();
     }
 
     const dragStart = e => {
-        setDraggedIndex(breeds.findIndex(breed => breed === e.target.innerHTML))
+        setStartingIndex(e.target.innerHTML)
+        dispatch(setOriginIndex(breeds.findIndex(breed => breed === e.target.innerHTML)))
+        dispatch(setOriginTable(currentTable))
     }
 
     const drop = e => {
         e.preventDefault()
-        setDroppedIndex(breeds.findIndex(breed => breed === e.target.innerHTML))
-        console.log( e.target.innerHTML)
-    }
-  
-    const dragEnd = () => {
-        if (draggedIndex && droppedIndex){
-            dispatch(dogReorder({draggedIndex, droppedIndex, tableNumber}))
+        const destinationBreed = e.target.innerHTML
+        console.log(`Destination table is: ${currentTable} and the origin table is ${originTable}`)
+        if (originTable === currentTable){ 
+            dispatch(reorder({originBreed: startingIndex, destinationBreed, currentTable}))
+        } else {
+            dispatch(moveBetweenTable({ currentTable, destinationBreed, originBreed: startingIndex }))
         }
-        setDraggedIndex(null)
-        setDroppedIndex(null)
     }
-  
-    let i = 1;
-    
-    const renderedTable = breeds.map((breed) => (
+
+    const renderedTable = breeds.map((breed, index) => (
         <tr key={breed}>
             <td>
-                {i++}
+                {++index}
             </td>
-            <td draggable='true' onDragStart={e=>dragStart(e)} onDragEnd={e=>dragEnd(e)} onDrop={e=>drop(e)} onDragOver={e=>allowDrop(e)}>
+            <td draggable='true' onDragStart={e=>dragStart(e)} onDrop={e=>drop(e)} onDragOver={e=>allowDrop(e) } onMouseOver={e=>e} style={{cursor:"pointer"}}>
                 {breed}
             </td>
         </tr>
@@ -51,7 +52,7 @@ export const Table = ( {tableNumber} ) => {
             <tbody>
                 <tr>
                     <th>Rank</th>
-                    <th>Breed {tableNumber}</th>
+                    <th>Breed {currentTable}</th>
                 </tr>
                 {renderedTable}
             </tbody>
