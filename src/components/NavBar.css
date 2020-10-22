@@ -1,0 +1,11 @@
+.navBar{
+    width: 100vw;
+    background-color: black;
+    color: #ffffff;
+    position: fixed;
+    top: 0
+}
+.logo{
+    margin: 10px 0 10px 20vw;
+    font-family: 'Oswald', sans-serif;
+}

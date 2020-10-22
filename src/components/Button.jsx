@@ -35,6 +35,6 @@ export const Button = (props) => {
     }
 
     return (
-        <button className="myButton" onClick={e=> onClick()}>{props.children}</button>
+        <button className="my-button" onClick={e=> onClick()}>{props.children}</button>
     )
 }

@@ -2,22 +2,36 @@ body {
   font-family: 'Noto Sans JP', sans-serif;
 }
 
-.App {
+.app {
+
+}
+
+.info-container {
   display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
   flex-direction: column;
+  margin:0 20vw
 }
 
-.TableContainer {
+.table-container {
   display: flex;
+  margin: auto;
+  width: 430px;
 }
 
-/* .Title {
-  position: fixed;
-  top: 2vh;
-} */
+.title {
+  margin-top: 67px;
+  text-align: center;
+}
+
+.description {
+  text-align: center;
+}
+
+.error {
+  text-align: center;
+  /* margin: 20px auto; */
+  color: red;
+}
 
 .loader,
 .loader:after {
