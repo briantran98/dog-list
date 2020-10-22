@@ -14,8 +14,8 @@ body {
 
 .table-container {
   display: flex;
-  margin: auto;
-  width: 430px;
+  width: 100vw;
+  justify-content: center;
 }
 
 .title {
@@ -31,6 +31,10 @@ body {
   text-align: center;
   /* margin: 20px auto; */
   color: red;
+}
+
+.mobile-button {
+  display: none;
 }
 
 .loader,
@@ -72,5 +76,22 @@ body {
   100% {
     -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 320px) {
+  .description {
+    display: none;
+  }
+  .table-container {
+    flex-direction: column;
+    margin-top: 50px;
+  }
+  .mobile-button {
+    display: flex;
+    
+  }
+  .title {
+    display: none;
   }
 }

@@ -46,6 +46,9 @@ function App() {
         {error && <span className="error">{error}</span>}
       </section>
       {content}
+      <div className="mobile-button">
+       <Button>Save</Button>
+      </div>
     </div>
   );
 }
