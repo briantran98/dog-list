@@ -43,8 +43,9 @@ const dogsSlice = createSlice({
                 const movedDog = state[`breeds${state.originTable}`][state.originIndex]
                 state[`breeds${action.payload.currentTable}`].splice(endIndex + 1, 0, movedDog )
                 state[`breeds${state.originTable}`].splice(state.originIndex, 1)
+                state.error = null
             } else {
-                console.log("Woof woof")
+                state.error = "Woof Invalid Action Woof"
             }
         },
     },

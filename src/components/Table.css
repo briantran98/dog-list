@@ -1,8 +1,27 @@
 table {
     border-collapse: collapse;
+    margin: 0px 10px
+    
 }
 
 th, td {
     border: 1px solid black;
     text-align: left;
 }
+
+tr {
+    line-height: 30px;
+}
+
+.data {
+    width: 150px
+}
+
+@media (max-width: 320px) {
+    table {
+        margin-bottom: 20px;
+    }
+    .data {
+        width: 80vw;
+    }
+  }
