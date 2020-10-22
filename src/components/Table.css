@@ -17,11 +17,8 @@ tr {
     width: 150px
 }
 
-@media (max-width: 320px) {
+@media (max-width: 480px) {
     table {
         margin-bottom: 20px;
-    }
-    .data {
-        width: 80vw;
     }
   }

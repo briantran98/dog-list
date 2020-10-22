@@ -79,12 +79,11 @@ body {
   }
 }
 
-@media (max-width: 320px) {
+@media (max-width: 480px) {
   .description {
     display: none;
   }
   .table-container {
-    flex-direction: column;
     margin-top: 50px;
   }
   .mobile-button {

@@ -16,7 +16,7 @@
 	text-shadow:0px 1px 0px #154682;
 }
 
-@media (max-width: 320px) {
+@media (max-width: 480px) {
     .my-button {
         margin: 0 auto 20px;
     }
