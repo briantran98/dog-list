@@ -1,7 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux'
+import './Button.css'
 
-export const Button = () => {
+export const Button = (props) => {
     const dogs = useSelector(state => state.dogs)
 
     const results = {
@@ -34,6 +35,6 @@ export const Button = () => {
     }
 
     return (
-        <button onClick={e=> onClick()}>Export</button>
+        <button className="myButton" onClick={e=> onClick()}>{props.children}</button>
     )
 }

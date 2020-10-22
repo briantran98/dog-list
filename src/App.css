@@ -1,44 +1,62 @@
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+}
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: center;
+  height: 100vh;
+  flex-direction: column;
 }
 
-.App-link {
-  color: #61dafb;
+.TableContainer {
+  display: flex;
 }
 
-.droppable{
-  width: 1000px;
-  height: 1000px;
-  background-color: yellow;
-}
+/* .Title {
+  position: fixed;
+  top: 2vh;
+} */
 
-@keyframes App-logo-spin {
-  from {
+.loader,
+.loader:after {
+  border-radius: 50%;
+  width: 10em;
+  height: 10em;
+}
+.loader {
+  margin: 60px auto;
+  font-size: 10px;
+  position: relative;
+  text-indent: -9999em;
+  border-top: 1.1em solid rgba(13, 13, 13, 0.2);
+  border-right: 1.1em solid rgba(142, 142, 142, 0.2);
+  border-bottom: 1.1em solid rgba(142, 142, 142, 0.2);
+  border-left: 1.1em solid rgba(142, 142, 142, 0.2);
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-animation: load8 1.1s infinite linear;
+  animation: load8 1.1s infinite linear;
+}
+@-webkit-keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
   }
-  to {
+  100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
 }

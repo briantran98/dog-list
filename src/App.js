@@ -18,13 +18,27 @@ function App() {
     }
   },[dogStatus, dispatch])
 
-  return (
-    <div className="App">
+  let content
+
+  if (dogStatus === 'loading') {
+    content = <div className="loader">Loading...</div>
+  } 
+  else if (dogStatus === 'completed') {
+    content = (
+    <React.Fragment>
       <main className="TableContainer">
         <Table tableNumber="1"/>
         <Table tableNumber="2"/>
-        <Button />
       </main>
+      <Button>Save</Button>
+    </React.Fragment>
+    )
+  }
+
+  return (
+    <div className="App">
+      <h1 className="Title">Rank Your Favorite Dog Breeds!</h1>
+      {content}
     </div>
   );
 }

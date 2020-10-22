@@ -28,7 +28,6 @@ export const Table = ( {tableNumber: currentTable} ) => {
     const drop = e => {
         e.preventDefault()
         const destinationBreed = e.target.innerHTML
-        console.log(`Destination table is: ${currentTable} and the origin table is ${originTable}`)
         if (originTable === currentTable){ 
             dispatch(reorder({originBreed: startingIndex, destinationBreed, currentTable}))
         } else {
@@ -41,7 +40,7 @@ export const Table = ( {tableNumber: currentTable} ) => {
             <td>
                 {++index}
             </td>
-            <td draggable='true' onDragStart={e=>dragStart(e)} onDrop={e=>drop(e)} onDragOver={e=>allowDrop(e) } onMouseOver={e=>e} style={{cursor:"pointer"}}>
+            <td className="data" draggable='true' onDragStart={e=>dragStart(e)} onDrop={e=>drop(e)} onDragOver={e=>allowDrop(e) } onMouseOver={e=>e} style={{cursor:"pointer"}}>
                 {breed}
             </td>
         </tr>
@@ -51,8 +50,8 @@ export const Table = ( {tableNumber: currentTable} ) => {
         <table>
             <tbody>
                 <tr>
-                    <th>Rank</th>
-                    <th>Breed {currentTable}</th>
+                    <td>Rank</td>
+                    <td className="data">Breed {currentTable}</td>
                 </tr>
                 {renderedTable}
             </tbody>
