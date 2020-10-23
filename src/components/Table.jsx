@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './Table.css'
 import { useSelector, useDispatch } from 'react-redux'
+import { Draggable, Droppable } from 'react-beautiful-dnd'
 
 import { 
     setOriginIndex,
@@ -15,46 +16,43 @@ export const Table = ( {tableNumber: currentTable} ) => {
     const breeds = useSelector(state => state.dogs[`breeds${currentTable}`])
     const originTable = useSelector(state => state.dogs.originTable)
 
-    const allowDrop = e => {
-        e.preventDefault();
-    }
-
-    const dragStart = e => {
-        setStartingIndex(e.target.innerHTML)
-        dispatch(setOriginIndex(breeds.findIndex(breed => breed === e.target.innerHTML)))
-        dispatch(setOriginTable(currentTable))
-    }
-
-    const drop = e => {
-        e.preventDefault()
-        const destinationBreed = e.target.innerHTML
-        if (originTable === currentTable){ 
-            dispatch(reorder({originBreed: startingIndex, destinationBreed, currentTable}))
-        } else {
-            dispatch(moveBetweenTable({ currentTable, destinationBreed, originBreed: startingIndex }))
-        }
-    }
-
-    const renderedTable = breeds.map((breed, index) => (
-        <tr key={breed}>
+    let i = 0;
+    const renderTable = breeds.map((breed, index) => (
+        <tr>
             <td>
-                {++index}
+                {++i}
             </td>
-            <td className="data" draggable='true' onDragStart={e=>dragStart(e)} onDrop={e=>drop(e)} onDragOver={e=>allowDrop(e) } onMouseOver={e=>e} style={{cursor:"pointer"}}>
-                {breed}
-            </td>
+            <Draggable draggableId={breed} index={index}>
+                {provided => (
+                    <td 
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                    >
+                        {breed}
+                    </td>
+                )}
+
+            </Draggable>
         </tr>
     ))
 
+
     return (
-        <table>
-            <tbody>
-                <tr>
-                    <td>Rank</td>
-                    <td className="data">Breed {currentTable}</td>
-                </tr>
-                {renderedTable}
-            </tbody>
-        </table>
+        <Droppable
+            droppableId={currentTable}
+        >
+            {provided => (
+                <table {...provided.droppableProps} ref={provided.innerRef}>
+                    <tr>
+                        <th>Rank</th>
+                        <th>Breed {currentTable}</th>
+                    </tr>
+                    {renderTable}
+                    
+                </table>
+            )}
+        </Droppable>
+        
     )
 }

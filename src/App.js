@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchDogs } from './features/dog/dogSlice'
+import { DragDropContext } from 'react-beautiful-dnd'
 
 import { Table } from './components/Table'
 import { Button } from './components/Button'
@@ -27,12 +28,12 @@ function App() {
   } 
   else if (dogStatus === 'completed') {
     content = (
-    <React.Fragment>
+    <DragDropContext onDragEnd={(result) => {console.log(result)}}>
       <main className="table-container">
         <Table tableNumber="1"/>
         <Table tableNumber="2"/>
       </main>
-    </React.Fragment>
+    </DragDropContext>
     )
   }
 
