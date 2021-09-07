@@ -5,5 +5,7 @@ Adding random lines
 Another added line
 
 
+
+Something
 Another line
 Application is used to showcase react and redux abilities
